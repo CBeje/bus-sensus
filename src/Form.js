@@ -136,7 +136,7 @@ export default function Form() {
 
   return (
     <>
-      {line.length === 0 ? (
+      {message && line.length === 0 ? (
         <Alert severity="error">{message}</Alert>
       ) : (
         <div>
