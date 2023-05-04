@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useEffect, useState } from "react";
 import {
   Box,
@@ -9,9 +10,10 @@ import {
   TextField,
   MenuItem,
   Button,
-  Alert,
+  Snackbar,
   FormHelperText,
 } from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
 import { timeStamp } from "./utils";
 import { nanoid } from "nanoid";
 
@@ -24,6 +26,7 @@ export default function Form() {
   const [selectedStation, setSelectedStation] = useState("");
   const [totalPassengers, setTotalPassengers] = useState(0);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [open, setOpen] = useState(false);
   const [postData, setPostData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [message, setErrorMessage] = useState("");
@@ -108,6 +111,7 @@ export default function Form() {
 
         const data = await response.json();
         setPostData(data);
+        setOpen(true);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
@@ -117,6 +121,18 @@ export default function Form() {
 
     handlePost();
   }
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 
   return (
     <>
@@ -224,6 +240,20 @@ export default function Form() {
               </Stack>
             </Card>
           </Box>
+          <Snackbar
+            open={open}
+            anchorOrigin={{ horizontal: "center", vertical: "top" }}
+            autoHideDuration={6000}
+            onClose={handleClose}
+          >
+            <Alert
+              onClose={handleClose}
+              severity="success"
+              sx={{ width: "100%" }}
+            >
+              Trimis cu succes!
+            </Alert>
+          </Snackbar>
         </div>
       )}
     </>
