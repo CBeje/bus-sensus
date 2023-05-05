@@ -1,0 +1,27 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    },
+    {
+      "linia": "Starter",
+      "ruta": "Lake Ofelia",
+      "statia": "Anjanette Row",
+      "numarPasageri": "2",
+      "ora": "18:48,on 5 May 2023",
+      "id": "KzJ5oPZqVUYhiF7sbgsbQ"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
