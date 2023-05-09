@@ -1,4 +1,9 @@
 import * as React from "react";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import {
   Stack,
@@ -53,7 +58,7 @@ export default function Form() {
         );
       } catch (error) {
         console.error(error);
-        setErrorMessage("Eroare de comunicare cu serverul !");
+        setErrorMessage("Eroare de comunicare cu serverul!");
       }
     }
     fetchData();
@@ -95,7 +100,7 @@ export default function Form() {
         const data = await response.json();
         setOpen(true);
       } catch (error) {
-        console.error(error);
+        setErrorMessage("Eroare de comunicare cu serverul! (POST)");
       }
     };
 
@@ -112,7 +117,7 @@ export default function Form() {
 
   return (
     <>
-      {message && !lines.length ? (
+      {message ? (
         <MuiAlert
           elevation={6}
           variant="filled"
@@ -124,7 +129,9 @@ export default function Form() {
         </MuiAlert>
       ) : (
         <Card elevation={2} align="center" sx={{ m: 2, mt: 5 }}>
-          <h2>BusSensus</h2>
+          <Typography variant="h4" sx={{ m: 2 }}>
+            BusSensus
+          </Typography>
           <Stack spacing={4} m={4}>
             <FormControl>
               <InputLabel id="linia-label">Linia</InputLabel>
@@ -164,7 +171,7 @@ export default function Form() {
               </Select>
               {!selectedLine && (
                 <FormHelperText>
-                  Selecteaza linia autobuzului mai intai.
+                  Selecteaza, mai intai, linia autobuzului.
                 </FormHelperText>
               )}
             </FormControl>
@@ -188,17 +195,24 @@ export default function Form() {
               </Select>
               {!selectedRoute && (
                 <FormHelperText>
-                  Selecteaza ruta autobuzului mai intai.
+                  Selecteaza, mai intai, ruta autobuzului.
                 </FormHelperText>
               )}
             </FormControl>
             <FormControl>
               <TextField
-                inputProps={{ inputMode: "numeric", min: "0", step: "1" }}
+                InputProps={{
+                  inputProps: { min: 0, max: 100 },
+                }}
+                onKeyPress={(event) => {
+                  if (event?.key === "-" || event?.key === "+") {
+                    event.preventDefault();
+                  }
+                }}
                 disabled={!selectedStation}
                 type="number"
                 id="nrPersoane"
-                label="Numar de persoane"
+                label="Numar de pasageri"
                 value={totalPassengers}
                 onChange={(e) => {
                   setTotalPassengers(e.target.value);
@@ -207,7 +221,7 @@ export default function Form() {
               />
               {!selectedStation && (
                 <FormHelperText>
-                  Selecteaza statia autobuzului mai intai.
+                  Selecteaza, mai intai, statia autobuzului.
                 </FormHelperText>
               )}
             </FormControl>
